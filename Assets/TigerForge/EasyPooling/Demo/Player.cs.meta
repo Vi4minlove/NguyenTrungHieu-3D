@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 302ada9a849f9714094b55afeb7acd44
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bulletPooler: {fileID: 11400000, guid: 5aea931aa2629264ba37cd8e6fdd46ce, type: 2}
+  - audioPooler: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
