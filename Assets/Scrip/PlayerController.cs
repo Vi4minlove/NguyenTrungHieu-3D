@@ -1,49 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 
 public class PlayerController : MonoBehaviour
 {
-    public Animator playerAnim;
-    public Rigidbody playerRig;
-    public float w_speed, wb_speed, olw_speed, rn_speed, ro_speed;
-    public bool walking = false;
-    public Transform playerTrans;
+    [SerializeField] private Rigidbody _rigidgoby;
+    [SerializeField] private FixedJoystick _joystick;
+    [SerializeField] private Animator _animator;
+
+    [SerializeField] private float _moveSpeed;
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W))
+        _rigidgoby.velocity = new Vector3(_joystick.Horizontal * _moveSpeed, _rigidgoby.velocity.y, _joystick.Vertical * _moveSpeed);
+        if (_joystick.Horizontal != 0 || _joystick.Vertical != -0)
         {
-            playerRig.velocity = transform.forward * w_speed * Time.deltaTime;
+            transform.rotation = Quaternion.LookRotation(_rigidgoby.velocity);
+            _animator.SetBool("isRunning", true);
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            playerRig.velocity = -transform.forward * wb_speed * Time.deltaTime;
-        }
-    }
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            playerAnim.SetTrigger("RifleRun");
-            playerAnim.ResetTrigger("RifleIdle");
-            walking = true;
-        }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            playerAnim.ResetTrigger("RifleRun");
-            playerAnim.SetTrigger("RifleIdle");
-            walking = false;
-        }
-
-        //if(walking == true)
-        //{
-        //    inf
-        //}
+        else
+            _animator.SetBool("isRunning", false);
     }
 }
